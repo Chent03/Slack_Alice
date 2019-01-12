@@ -20,10 +20,10 @@ type Employee struct {
 }
 
 type Vistor struct {
-	FirstName      string
-	LastName       string
-	MeetingEmpName string
-	MeetingEmpID   string
+	FirstName      string `json:"firstName"`
+	LastName       string `json:"lastName"`
+	MeetingEmpName string `json:"empName"`
+	MeetingEmpID   string `json:"empID"`
 }
 
 // ConnectSlack takens in a token and connects to the Slack API
@@ -65,6 +65,5 @@ func (ss *SlackService) PostMessage(v Vistor) error {
 	if err != nil {
 		log.Println(err)
 	}
-
 	return nil
 }
