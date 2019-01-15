@@ -4,32 +4,30 @@ import { Segment, Button, Form } from 'semantic-ui-react';
 
 import CustomSelection from '../../../UI/CustomSelection';
 
-const Friends = [
-    {
-        text: 'tony',
-        value: 'tony'
-    },
-    {
-        text: 'joey',
-        value: 'joey'
-    },
-    {
-        text: 'calvin',
-        value: 'calvin'
-    }
-]
+const renderEmployeeList = (list) => {
+    let emp =  list.map(item => {
+        return {
+            text: item.FirstName + ' ' + item.LastName,
+            value: item.ID,
+            image: { avatar: true, src: item.Image}
+        }
+    })
+    return (
+        <Field 
+            name="empID"
+            placeholder="Visiting"
+            options={emp}
+            component={CustomSelection}
+            />
+    )
+}
 
-const FormTwo = ({handleSubmit}) => {
+const FormTwo = ({handleSubmit, employeeList}) => {
     return (
         <Form onSubmit={handleSubmit}>
             <Segment>
-                <Field 
-                    name="visiting"
-                    placeholder="Visiting"
-                    options={Friends}
-                    component={CustomSelection}
-                />
-                <div>
+                { employeeList ? renderEmployeeList(employeeList) : ''}
+                <div style={{marginTop: "20px"}}>
                     <Button>Submit</Button>
                 </div>
             </Segment>

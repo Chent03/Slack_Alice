@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
-import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
+import { connect } from 'react-redux';
+import { Grid, Header} from 'semantic-ui-react'
+
+import { fetchEmployeeList, postEmployeeMessage } from '../../store/actions';
 
 import './Greetings.scss';
 import FormOne from './WizardForm/FormOne/FormOne';
 import FormTwo from './WizardForm/FormTwo/FormTwo';
 
 class Greetings extends Component {
+    componentDidMount() {
+        const {fetchEmployeeList} = this.props;
+        fetchEmployeeList();
+    }
+
     constructor(props) {
         super(props)
         this.state = {
@@ -22,10 +30,16 @@ class Greetings extends Component {
     }
 
     handleSubmit = () => {
-        console.log('submitting');
+        const { firstName, lastName, empID } = this.props.wizard.values;
+        this.props.postEmployeeMessage({
+            firstName,
+            lastName,
+            empID
+        })
     }
     render() {
         const {form} = this.state;
+        const { employees } = this.props;
         return (
             <div className='login-form'>
                 <style>{`
@@ -41,10 +55,7 @@ class Greetings extends Component {
                     Please Sign In
                     </Header>
                         {form === 1 && <FormOne handleSubmit={this.nextForm} />}
-                        {form === 2 && <FormTwo handleSubmit={this.handleSubmit} />}
-                    <Message>
-                    New to us? <a href='#'>Sign Up</a>
-                    </Message>
+                        {form === 2 && <FormTwo handleSubmit={this.handleSubmit} employeeList={employees}/>}
                 </Grid.Column>
                 </Grid>
             </div>
@@ -52,4 +63,16 @@ class Greetings extends Component {
     }
 }
 
-export default Greetings;
+const mapStateToProps = (state) => {
+    const { employees, loading, loadingError } = state.slack;
+    const { wizard } = state.form;
+    return {
+        employees,
+        loading,
+        loadingError,
+        wizard
+    }
+}
+
+
+export default connect(mapStateToProps, { fetchEmployeeList, postEmployeeMessage })(Greetings);

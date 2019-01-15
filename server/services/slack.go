@@ -20,10 +20,9 @@ type Employee struct {
 }
 
 type Vistor struct {
-	FirstName      string `json:"firstName"`
-	LastName       string `json:"lastName"`
-	MeetingEmpName string `json:"empName"`
-	MeetingEmpID   string `json:"empID"`
+	FirstName    string `json:"firstName"`
+	LastName     string `json:"lastName"`
+	MeetingEmpID string `json:"empID"`
 }
 
 // ConnectSlack takens in a token and connects to the Slack API
@@ -46,20 +45,22 @@ func (ss *SlackService) GetAllUsers() ([]Employee, error) {
 		return nil, err
 	}
 	for _, user := range users {
-		e = append(e, Employee{
-			ID:        user.ID,
-			FirstName: user.Profile.FirstName,
-			LastName:  user.Profile.LastName,
-			Email:     user.Profile.Email,
-			Image:     user.Profile.Image24,
-		})
+		if !user.IsBot {
+			e = append(e, Employee{
+				ID:        user.ID,
+				FirstName: user.Profile.FirstName,
+				LastName:  user.Profile.LastName,
+				Email:     user.Profile.Email,
+				Image:     user.Profile.Image24,
+			})
+		}
 	}
 	return e, nil
 }
 
 // PostMessage sends message to Slack User
 func (ss *SlackService) PostMessage(v Vistor) error {
-	message := fmt.Sprintf("Hi %s, %s %s is here for you at the front desk.", v.MeetingEmpName, v.FirstName, v.LastName)
+	message := fmt.Sprintf("Hi, %s %s is here for you at the front desk.", v.FirstName, v.LastName)
 
 	_, _, err := ss.slack.PostMessage(v.MeetingEmpID, slack.MsgOptionText(message, false))
 	if err != nil {

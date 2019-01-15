@@ -1,10 +1,10 @@
 import React from 'react';
 import { Form } from 'semantic-ui-react';
 
-const CustomFormField = ({placeholder}) => {
+const CustomFormField = ({placeholder, input, type}) => {
     return (
         <Form.Field>
-            <input placeholder={placeholder}></input>
+            <input {...input} placeholder={placeholder} type={type}></input>
         </Form.Field>
     )
 }

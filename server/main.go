@@ -15,7 +15,7 @@ func main() {
 	}
 	alice := controllers.NewAlice(ss)
 	r := mux.NewRouter()
-	r.HandleFunc("/employees", alice.GetAllUsers).Methods("GET")
-	r.HandleFunc("/employees", alice.PostToUser).Methods("POST")
+	r.HandleFunc("/api/employees", alice.GetAllUsers).Methods("GET")
+	r.HandleFunc("/api/employees", alice.PostToUser).Methods("POST")
 	http.ListenAndServe(":5000", r)
 }
