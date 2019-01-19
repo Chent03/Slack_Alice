@@ -1,8 +1,12 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Segment, Button, Form } from 'semantic-ui-react';
+import DatePicker from 'react-datepicker';
 
 import CustomSelection from '../../../UI/CustomSelection';
+
+import "react-datepicker/dist/react-datepicker.css";
+
 
 const renderEmployeeList = (list) => {
     let emp =  list.map(item => {
@@ -22,11 +26,20 @@ const renderEmployeeList = (list) => {
     )
 }
 
-const FormTwo = ({handleSubmit, employeeList}) => {
+const FormTwo = ({handleSubmit, employeeList, handleTimechange, timeState}) => {
     return (
         <Form onSubmit={handleSubmit}>
             <Segment>
                 { employeeList ? renderEmployeeList(employeeList) : ''}
+                <DatePicker 
+                    selected={timeState}
+                    onChange={handleTimechange}
+                    showTimeSelect
+                    showTimeSelectOnly
+                    timeIntervals={30}
+                    dateFormat="h:mm aa"
+                    timeCaption="Time"
+                />
                 <div style={{marginTop: "20px"}}>
                     <Button>Submit</Button>
                 </div>

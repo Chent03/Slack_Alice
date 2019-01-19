@@ -17,7 +17,8 @@ class Greetings extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            form: 1
+            form: 1,
+            appointmentTime: new Date()
         }
     }
 
@@ -29,12 +30,20 @@ class Greetings extends Component {
         this.setState({form: this.state.form - 1})
     }
 
+    handleTimeChange = (time) => {
+        this.setState({
+            appointmentTime: time
+        })
+    }
+
     handleSubmit = () => {
         const { firstName, lastName, empID } = this.props.wizard.values;
+        const { appointmentTime } = this.state;
         this.props.postEmployeeMessage({
             firstName,
             lastName,
-            empID
+            empID,
+            appointmentTime
         })
     }
     render() {
@@ -55,7 +64,13 @@ class Greetings extends Component {
                     Please Sign In
                     </Header>
                         {form === 1 && <FormOne handleSubmit={this.nextForm} />}
-                        {form === 2 && <FormTwo handleSubmit={this.handleSubmit} employeeList={employees}/>}
+                        {form === 2 && <FormTwo 
+                                            handleSubmit={this.handleSubmit} 
+                                            employeeList={employees}
+                                            timeState={this.state.appointmentTime}
+                                            handleTimechange={this.handleTimeChange}
+                                        />
+                        }
                 </Grid.Column>
                 </Grid>
             </div>
