@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Grid, Header} from 'semantic-ui-react'
+import moment from 'moment';
 
 import { fetchEmployeeList, postEmployeeMessage } from '../../store/actions';
 
@@ -43,7 +44,7 @@ class Greetings extends Component {
             firstName,
             lastName,
             empID,
-            appointmentTime
+            aptTime: moment(appointmentTime).format('h:mm a')
         })
     }
     render() {

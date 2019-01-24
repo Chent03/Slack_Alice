@@ -23,6 +23,7 @@ type Vistor struct {
 	FirstName    string `json:"firstName"`
 	LastName     string `json:"lastName"`
 	MeetingEmpID string `json:"empID"`
+	AptTime      string `json:"aptTime"`
 }
 
 // ConnectSlack takens in a token and connects to the Slack API
