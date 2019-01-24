@@ -13,8 +13,9 @@ class App extends Component {
             <div>
                 <BrowserRouter>
                     <Switch>
-                        <Route exact path="/" component={MyCalendar} />
+                        <Route exact path="/" component={Main} />
                         <Route path="/check-in" component={Greetings} />
+                        <Route path="/schedule" component={MyCalendar} />
                     </Switch>
                 </BrowserRouter>
             </div>

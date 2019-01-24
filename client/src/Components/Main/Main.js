@@ -21,7 +21,9 @@ const Main = () => {
                         <Button>Sign In</Button>
                     </Link>
                     <Button.Or/>
-                    <Button>Make Appointment</Button>
+                    <Link to="/schedule">
+                        <Button>Make Appointment</Button>
+                    </Link>
                 </Button.Group>
             </Grid.Column>
         </Grid>

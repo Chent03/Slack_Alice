@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
+import { withRouter } from 'react-router-dom';
 import BigCalendar from 'react-big-calendar';
 import moment from 'moment';
 
@@ -71,7 +72,7 @@ const mapStateToProps = (state) => {
 
 MyCalendar = connect(mapStateToProps, { fetchEmployeeList })(MyCalendar);
 
-export default reduxForm({
+export default withRouter(reduxForm({
     form: 'calendar',
     forceUnregisterOnUnmount: true
-})(MyCalendar);
+})(MyCalendar));
